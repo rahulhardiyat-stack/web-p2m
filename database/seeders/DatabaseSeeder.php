@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             PartnerSeeder::class,
             SponsorSeeder::class,
             MenuSeeder::class,
+            AccreditationSeeder::class,
+            FacultySeeder::class,
         ]);
     }
 }

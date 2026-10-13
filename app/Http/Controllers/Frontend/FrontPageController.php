@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Accreditation;
 use App\Models\Post;
 use App\Models\Event;
 use App\Models\Lecturer;
@@ -13,6 +14,9 @@ use App\Models\ContactMessage;
 use App\Models\Setting;
 use App\Models\ResearchService;
 use Illuminate\Http\Request;
+use App\Models\Faculty;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class FrontPageController extends Controller
 {
@@ -136,5 +140,73 @@ class FrontPageController extends Controller
         }
 
         return view('frontend.search', compact('q', 'results'));
+    }
+    
+    public function accreditation(Request $request){
+
+        $query = Accreditation::with('faculty');
+
+        //filter Keyword
+        if($request->filled('search')){
+            $search = $request->search;
+            $query->where(fn($q) => $q->where('title', 'like', "%{$search}%")
+            ->orWhere('title', 'like', "%{$search}%"));
+        }
+
+        //filter tipe (program studi/fakultas)
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
+        }
+
+        //filter fakultas
+        if($request->filled('faculty_id')){
+            $query->where('faculty_id', $request->faculty_id);
+        }
+
+        //Filter status akreditasi
+        if($request->filled('status')){
+            $query->where('status', $request->status);
+        }
+
+        // Filter Masa Berlaku (Menggunakan Scope Virtual)
+        if ($request->filled('validity')) {
+            match ($request->validity) {
+                'active' => $query->active(),
+                'expired' => $query->expired(),
+                'expiring_soon' => $query->expiringSoon(180),
+                default => null,
+            };
+        }
+
+        // Ambil data dengan paginasi & pertahankan query string di URL pagination
+        $accreditations = $query->orderBy('expired_date', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
+        // Ambil master data fakultas untuk isi opsi dropdown
+        $faculties = Faculty::all();
+
+        return view('frontend.accreditation', compact('accreditations', 'faculties'));
+
+    }
+    
+    public function downloadAccreditation(string $id)
+    {
+        // 1. Cari data akreditasi berdasarkan ID
+        $accreditation = Accreditation::with('faculty')->findOrFail($id);
+
+        // 2. Validasi apakah kolom document_path terisi dan filenya ada di storage
+        if (empty($accreditation->document_path) || !Storage::disk('public')->exists($accreditation->document_path)) {
+            abort(404, 'File tidak ditemukan');
+        }
+
+        // 3. Ambil ekstensi asli file (misal: pdf, docx, dll)
+        $extension = pathinfo($accreditation->document_path, PATHINFO_EXTENSION);
+
+        // 4. Buat nama file download yang aman (membersihkan karakter aneh dari title)
+        $fileName = Str::slug($accreditation->title) . '.' . ($extension ?: 'pdf');
+
+        // 5. Download file dari disk public
+        return Storage::disk('public')->download($accreditation->document_path, $fileName);
     }
 }

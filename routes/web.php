@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AccreditationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\PostController as FrontPostController;
@@ -64,6 +65,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', \App\Htt
 
     // Announcements
     Route::resource('announcements', AnnouncementController::class);
+    
+    //accreditations
+    Route::resource('accreditations', AccreditationController::class);
 
     // Events & Agenda
     Route::resource('events', EventController::class);
@@ -206,6 +210,11 @@ Route::group([
     Route::get('/kontak', [ContactController::class , 'index'])->name('contact.index');
     Route::post('/kontak', [ContactController::class , 'store'])->name('contact.store');
     Route::get('/cari', [FrontInfoPageController::class , 'search'])->name('search');
+    
+    // Akreditasi
+    Route::get('/akreditasi', [FrontInfoPageController::class , 'accreditation'] )->name('accreditation');
+    Route::get('/akreditasi/{id}/download', [FrontInfoPageController::class , 'downloadAccreditation'] )->name('accreditation.public-download');
+    
     // Sitemap & Robots
     Route::get('/sitemap.xml', [HomeController::class , 'sitemap'])->name('sitemap');
     Route::get('/robots.txt', [HomeController::class , 'robots'])->name('robots');

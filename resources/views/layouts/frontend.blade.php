@@ -8,7 +8,7 @@
     <title class="notranslate" translate="no">@stack('title') {{ \App\Models\Setting::get('site_name', config('app.name')) }}</title>
     <meta name="description" content="@stack('meta_description'){{ \App\Models\Setting::get('seo_meta_description', '') }}">
     <meta name="keywords" content="@stack('meta_keywords'){{ \App\Models\Setting::get('seo_keywords', '') }}">
-    <meta name="author" content="{{ \App\Models\Setting::get('site_name', 'Website Prodi') }}">
+    <meta name="author" content="{{ \App\Models\Setting::get('site_name', 'Website P2M STAIN Meulaboh') }}">
 
     {{-- Open Graph --}}
     <meta property="og:title" content="@stack('og_title'){{ \App\Models\Setting::get('site_name') }}">
@@ -22,7 +22,9 @@
     @if($favicon)
         <link rel="icon" href="{{ asset('storage/'.$favicon) }}" type="image/x-icon">
     @else
-        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+        <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
     @endif
 
     {{-- Google Fonts --}}

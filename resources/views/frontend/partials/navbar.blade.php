@@ -331,6 +331,45 @@
         document.addEventListener('webkitfullscreenchange', updateFsIcon);
         document.addEventListener('mozfullscreenchange', updateFsIcon);
         document.addEventListener('MSFullscreenChange', updateFsIcon);
+
+        // Submenu handling for mobile/touch
+        const submenus = document.querySelectorAll('.dropdown-submenu > [data-menu-submenu-toggle="true"]');
+        const closeSubmenu = (submenu) => {
+            submenu.classList.remove('show');
+            submenu.querySelector(':scope > [data-menu-submenu-toggle="true"]')?.setAttribute('aria-expanded', 'false');
+            submenu.querySelectorAll('.dropdown-submenu.show').forEach(closeSubmenu);
+        };
+
+        submenus.forEach(function(submenu) {
+            submenu.addEventListener('click', function(e) {
+                if (window.innerWidth < 992) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const parent = this.closest('.dropdown-submenu');
+                    const shouldOpen = !parent.classList.contains('show');
+
+                    parent.parentElement.querySelectorAll(':scope > .dropdown-submenu.show').forEach(sibling => {
+                        if (sibling !== parent) {
+                            closeSubmenu(sibling);
+                        }
+                    });
+
+                    parent.classList.toggle('show', shouldOpen);
+                    this.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+
+                    if (!shouldOpen) {
+                        parent.querySelectorAll(':scope > .dropdown-menu .dropdown-submenu.show').forEach(closeSubmenu);
+                    }
+                }
+            });
+        });
+
+        document.querySelectorAll('#navbarMain > .navbar-nav > .dropdown').forEach(function(dropdown) {
+            dropdown.addEventListener('hidden.bs.dropdown', function() {
+                this.querySelectorAll('.dropdown-submenu.show').forEach(closeSubmenu);
+            });
+        });
     });
 </script>
 
@@ -364,10 +403,10 @@
                             $line2 = \App\Models\Setting::get('site_name_line2', '');
                             $siteNameDisplay = e($line1) . '<br>' . e($line2);
                         } else {
-                            $siteName = \App\Models\Setting::get('site_name', 'Website Prodi');
+                            $siteName = \App\Models\Setting::get('site_name', 'Website P2M');
                             $escapedName = e($siteName);
-                            $siteNameDisplay = str_contains($escapedName, 'Program Studi')
-                                ? str_replace('Program Studi', 'Program Studi<br>', $escapedName)
+                            $siteNameDisplay = str_contains($escapedName, 'P2M')
+                                ? str_replace('P2M', 'P2M<br>', $escapedName)
                                 : $escapedName;
                         }
                     @endphp
@@ -382,7 +421,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarMain">
-            <ul class="navbar-nav ms-auto gap-2 align-items-center">
+            <ul class="navbar-nav ms-auto gap-0.5 align-items-center">
                 @if(isset($sharedMenus['main-menu']) && $sharedMenus['main-menu']->items->count() > 0)
                     @foreach($sharedMenus['main-menu']->items as $item)
                         @include('frontend.partials.nav-menu-item', ['item' => $item, 'depth' => 0])
@@ -662,6 +701,10 @@
             position: static;
             margin-left: 1rem;
             box-shadow: none !important;
+            display: none;
+        }
+        .dropdown-submenu.show > .dropdown-menu {
+            display: block;
         }
     }
 
