@@ -65,7 +65,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', \App\Htt
 
     // Announcements
     Route::resource('announcements', AnnouncementController::class);
-    
+
     //accreditations
     Route::resource('accreditations', AccreditationController::class);
 
@@ -210,11 +210,11 @@ Route::group([
     Route::get('/kontak', [ContactController::class , 'index'])->name('contact.index');
     Route::post('/kontak', [ContactController::class , 'store'])->name('contact.store');
     Route::get('/cari', [FrontInfoPageController::class , 'search'])->name('search');
-    
+
     // Akreditasi
     Route::get('/akreditasi', [FrontInfoPageController::class , 'accreditation'] )->name('accreditation');
     Route::get('/akreditasi/{id}/download', [FrontInfoPageController::class , 'downloadAccreditation'] )->name('accreditation.public-download');
-    
+
     // Sitemap & Robots
     Route::get('/sitemap.xml', [HomeController::class , 'sitemap'])->name('sitemap');
     Route::get('/robots.txt', [HomeController::class , 'robots'])->name('robots');
