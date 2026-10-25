@@ -39,14 +39,11 @@ use App\Http\Controllers\Admin\ResearchServiceController;
 use App\Http\Controllers\Admin\SponsorController;
 use App\Http\Controllers\Admin\FaqController;
 
-Route::view('/test', 'test');
+/*Route::view('/test', 'test');
 
-Route::get('/check-php', function () {
-    return 'PHP Version: ' . phpversion();
-});
 Route::get('/check-php-info', function () {
     phpinfo();
-});
+});*/
 
 /* |-------------------------------------------------------------------------- | Admin Panel Routes (Protected) |-------------------------------------------------------------------------- */
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', \App\Http\Middleware\AdminLocale::class])->group(function () {
