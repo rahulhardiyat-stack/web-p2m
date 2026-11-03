@@ -67,7 +67,9 @@
 <script>
 function showMediaDetails(id) {
     // Show loading or something if needed
-    $.get("{{ route('admin.media.json', '') }}/" + id, function(data) {
+    const url = @json(route('admin.media.json', ['id' => '__MEDIA_ID__']))
+        .replace('__MEDIA_ID__', encodeURIComponent(id));
+    $.get(url, function(data) {
         populateMediaModal(data);
     });
 }
