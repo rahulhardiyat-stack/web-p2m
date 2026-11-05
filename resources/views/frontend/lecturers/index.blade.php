@@ -29,6 +29,15 @@
     </div>
 </div>
 
+<div class="p-3">
+    <a href="https://drive.google.com/file/d/1qj4tx5BSSM8QSHcIB2Xw13zt1EbuXvQv/view?usp=sharing"
+       target="_blank"
+       class="inline-flex items-center gap-2.5 px-5 py-2.5 bg-red-50 text-red-700 font-medium text-sm rounded-xl border border-red-200/80 hover:bg-red-600 hover:text-white hover:border-transparent transition-all duration-200 ease-in-out shadow-sm hover:shadow-md no-underline">
+        <i class="fas fa-file-pdf text-base"></i>
+        <span>SK Homebase Dosen</span>
+    </a>
+</div>
+
 <section class="py-5 bg-light">
     <div class="container">
         <!-- Tabs for Dosen and Tendik -->
