@@ -29,17 +29,6 @@
     </div>
 </div>
 
-{{--SK Homebase--}}
-{{--<div class="p-3">
-    <a href="https://drive.google.com/file/d/1qj4tx5BSSM8QSHcIB2Xw13zt1EbuXvQv/view?usp=sharing"
-       target="_blank"
-       style="text-decoration: none !important;"
-       class="inline-flex items-center gap-2.5 px-5 py-2.5 bg-gray-50 !text-gray-700 font-medium text-sm rounded-xl border border-gray-200 hover:bg-gray-700 hover:!text-white hover:border-transparent transition-all duration-200 ease-in-out shadow-sm hover:shadow-md no-underline">
-        <i class="fas fa-file-pdf text-base text-red-500 group-hover:!text-white"></i>
-        <span style="color: #374151 !important;">SK Homebase Dosen</span>
-    </a>
-</div>--}}
-
 {{--infografis data dosen--}}
 <section class="py-5 bg-light">
         <div class="container">
@@ -98,7 +87,7 @@
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link rounded-4 fw-bold py-1" id="tendik-tab" data-bs-toggle="pill" data-bs-target="#tendik" type="button" role="tab" aria-controls="tendik" aria-selected="false">
+                <button class="nav-link rounded-4 fw-bold py-3" id="tendik-tab" data-bs-toggle="pill" data-bs-target="#tendik" type="button" role="tab" aria-controls="tendik" aria-selected="false">
                     <i class="fas fa-user-cog me-2"></i> {{ __('Tenaga Kependidikan') }}
                 </button>
             </li>
@@ -110,10 +99,10 @@
                 {{--Filter Bar--}}
                 <div class="filter-card shadow-sm mb-1 p-1 rounded-4 bg-white border border-ligh">
                     <form action="{{ route('lecturers.index') }}" method="GET" class="row g-3 justify-content-end">
-                        <div class="row g-3 justify-content-end align-items-end mb-3">
+                        <div class="row g-3 justify-content-end align-items-end mb-1">
                             <!-- Input Pencarian -->
                             <div class="col-12 col-md-5">
-                                <label class="form-label small fw-bold text-muted text-uppercase letter-spacing-1">Cari Dosen/Homebase</label>
+                                <label class="form-label small fw-bold text-muted text-uppercase letter-spacing-1">Cari Dosen</label>
                                 <div class="input-group shadow-sm">
                                     <span class="input-group-text bg-white border-end-0">
                                         <i class="fas fa-search text-success"></i>
@@ -123,7 +112,7 @@
                             </div>
 
                             <!-- Select Homebase -->
-                            <div class="col-12 col-md-4">
+                            <div class="col-3 col-sm-2">
                                 <label class="form-label small fw-bold text-muted text-uppercase letter-spacing-1">Homebase</label>
                                 <select name="p" class="form-select shadow-sm select-year">
                                     <option value="">--Prodi--</option>
@@ -146,11 +135,22 @@
                             </div>
 
                             <!-- Tombol Filter -->
-                            <div class="col-12 col-md-auto">
+                            <div class="col-12 col-md-auto px-4">
                                 <button type="submit" class="btn btn-success btn-sm rounded-pill py-2 px-4 shadow-sm w-100">
                                     <i class="fas fa-filter me-2 text-white"></i> Filter Data
                                 </button>
                             </div>
+                        </div>
+                        {{--SK Homebase--}}
+                        <div class="d-flex justify-content-center d-flex align-items-center">
+                            <a href="https://drive.google.com/file/d/1qj4tx5BSSM8QSHcIB2Xw13zt1EbuXvQv/view?usp=sharing"
+                               target="_blank"
+                               style="text-decoration: none !important;"
+                               class="inline-flex items-center bg-gray-50
+                               !text-gray-700 font-medium text-sm rounded-xl border border-gray-200 hover:bg-gray-700 hover:!text-white hover:border-transparent transition-all duration-200 ease-in-out shadow-sm hover:shadow-md no-underline">
+                                <i class="fas fa-file-pdf text-base text-red-500 group-hover:!text-white"></i>
+                                <span style="color: #374151 !important;">SK Homebase Dosen</span>
+                            </a>
                         </div>
 
                        {{-- <div class="col-md-4 d-grid">
