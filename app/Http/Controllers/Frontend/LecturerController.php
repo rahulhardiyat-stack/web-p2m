@@ -14,6 +14,8 @@ class LecturerController extends Controller
     public function index(Request $request)
     {
 
+
+
         $dosenQuery = Lecturer::active()->where('type', 'dosen');
         if($request->filled('q')) {
             $search = $request->q;
@@ -28,9 +30,15 @@ class LecturerController extends Controller
                 ->orderBy('order')->paginate(15);
         }
 
-        $dosen = $dosenQuery->orderBy('order')->paginate(15);
+
+        if ($request->filled('p')) {
+            $search = $request->p;
+            $dosenQuery->where('position', $search);
+        }
+
+        $dosen = $dosenQuery->orderBy('order')->paginate(15)->withQueryString();
         $dosen->appends($request->all());
-        $tendik = Lecturer::active()->where('type', 'tendik')->orderBy('order')->paginate(15);
+        $tendik = Lecturer::active()->where('type', 'tendik')->orderBy('order')->paginate(15)->withQueryString();
 
         return view('frontend.lecturers.index', compact('dosen', 'tendik'));
     }

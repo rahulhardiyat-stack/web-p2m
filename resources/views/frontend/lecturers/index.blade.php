@@ -63,31 +63,49 @@
                 {{--Filter Bar--}}
                 <div class="filter-card shadow-sm mb-5 p-4 rounded-4 bg-white border border-ligh">
                     <form action="{{ route('lecturers.index') }}" method="GET" class="row g-3 justify-content-end">
-                        <div class="d-flex gap-2 justify-content-end align-items-end col-md-6">
-                            <div class="col-md-12 ms-auto">
+                        <div class="row g-3 justify-content-end align-items-end mb-3">
+                            <!-- Input Pencarian -->
+                            <div class="col-12 col-md-5">
                                 <label class="form-label small fw-bold text-muted text-uppercase letter-spacing-1">Cari Dosen/Homebase</label>
-                                <div class="input-group search-group flex-grow-1">
-                                    <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-success"></i></span>
+                                <div class="input-group shadow-sm">
+                                    <span class="input-group-text bg-white border-end-0">
+                                        <i class="fas fa-search text-success"></i>
+                                    </span>
                                     <input type="text" name="q" class="form-control border-start-0" placeholder="Ketik kata kunci..." value="{{ request('q') }}">
-                                    <div class="px-2">
-                                        <button type="submit" class="btn btn-success btn-sm rounded-pill py-2 shadow-sm">
-                                            <i class="fas fa-filter me-2 text-white"></i> Filter Data
-                                        </button>
-                                    </div>
                                 </div>
                             </div>
 
+                            <!-- Select Homebase -->
+                            <div class="col-12 col-md-4">
+                                <label class="form-label small fw-bold text-muted text-uppercase letter-spacing-1">Homebase</label>
+                                <select name="p" class="form-select shadow-sm select-year">
+                                    <option value="">--Prodi--</option>
+                                    <option value="Dosen-PAI">Pendidikan Agama Islam</option>
+                                    <option value="Dosen-PGM">Pendidikan Guru Madrasah Ibtidaiyah</option>
+                                    <option value="Dosen-TBI">Tadris Bahasa Inggris</option>
+                                    <option value="Dosen-MPI">Manajemen Pendidikan Islam</option>
+                                    <option value="Dosen-PBA">Pendidikan Bahasa Arab</option>
+                                    <option value="Dosen-KPI">Komunikasi Penyiaran Islam</option>
+                                    <option value="Dosen-PMI">Pengembangan Masyarakat Islam</option>
+                                    <option value="Dosen-IAT">Ilmu Al-Qur'an dan Hadist</option>
+                                    <option value="Dosen-HPI">Hukum Pidana Islam</option>
+                                    <option value="Dosen-HES">Hukum Ekonomi Islam</option>
+                                    <option value="Dosen-PSY">Perbankan Syariah</option>
+                                    <option value="Dosen-HTN">Hukum Tata Negara</option>
+                                    <option value="Dosen-MPD">Manajemen Pendidikan Islam (S2)</option>
+                                    <option value="Dosen-MSI">Ekonomi Syariah (S2)</option>
+                                    <option value="Dosen-MES">Studi Islam (S2)</option>
+                                </select>
+                            </div>
+
+                            <!-- Tombol Filter -->
+                            <div class="col-12 col-md-auto">
+                                <button type="submit" class="btn btn-success btn-sm rounded-pill py-2 px-4 shadow-sm w-100">
+                                    <i class="fas fa-filter me-2 text-white"></i> Filter Data
+                                </button>
+                            </div>
                         </div>
-                       {{-- <div class="col-md-3">
-                            <label class="form-label small fw-bold text-muted text-uppercase letter-spacing-1">Homebase</label>
-                            <select name="year" class="form-select select-year" onchange="this.form.submit()">
-                                <option value="">Prodi</option>
-                                @php $currentYear = date('Y'); @endphp
-                                @for($y = $currentYear; $y >= 2018; $y--)
-                                    <option value="{{ $y }}" {{ request('year') == $y ? 'selected' : '' }}>{{ $y }}</option>
-                                @endfor
-                            </select>
-                        </div>--}}
+
                        {{-- <div class="col-md-4 d-grid">
                             <button type="submit" class="btn btn-success btn-sm rounded-pill py-1 shadow-sm">
                                 <i class="fas fa-filter me-2 text-white"></i> Filter
