@@ -7,7 +7,7 @@
 @section('content')
 <div class="page-header-premium py-5 text-white position-relative overflow-hidden">
     <div class="page-header-pattern"></div>
-    <div class="container py-4 position-relative z-1">
+    <div class="container infografis-overlay-container position-relative" style="z-index: 99; margin-top: -60px;">
         <div class="row align-items-center">
             <div class="col-lg-8" data-aos="fade-up">
                 <nav aria-label="breadcrumb">
@@ -40,28 +40,75 @@
     </a>
 </div>--}}
 
+{{--infografis data dosen--}}
 <section class="py-5 bg-light">
+        <div class="container">
+            <div class="nav nav-pills nav-justified justify-content-center shadow-sm rounded-4 bg-white shadow-sm p-4 rounded-4"
+                 style="position: relative; z-index: 10; margin-top: -120px; width: 100%; overflow: hidden;">
+            <!-- Section Header -->
+            <div class="text-center mb-5">
+                <h2 class="fw-bold text-success">Statistik Dosen & Pengajar</h2>
+                <p class="text-muted">Ringkasan data tenaga pendidik berdasarkan kualifikasi dan jabatan akademik.</p>
+            </div>
+
+            <!-- Infographics Grid -->
+            <div class="row g-4 justify-content-center">
+                @php
+                    // Contoh array data, nantinya ini bisa dipassing dari Controller, misal: $statistikDosen
+                    $statistikDosen = [
+                        ['label' => 'Total Dosen', 'value' => 107, 'icon' => 'fa-users', 'color' => 'primary'],
+                        ['label' => 'Asisten Ahli', 'value' => 0, 'icon' => 'fa-user-graduate', 'color' => 'warning'],
+                        ['label' => 'Lektor', 'value' => 0, 'icon' => 'fa-user-tie', 'color' => 'info'],
+                        ['label' => 'Lektor Kepala', 'value' => 0, 'icon' => 'fa-chalkboard-teacher', 'color' => 'success'],
+                        ['label' => 'Magister (S2)', 'value' => 0, 'icon' => 'fa-book-reader', 'color' => 'secondary'],
+                        ['label' => 'Doktor (S3)', 'value' => 0, 'icon' => 'fa-award', 'color' => 'danger'],
+                    ];
+                @endphp
+
+                @foreach($statistikDosen as $index => $stat)
+                    <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="{{ ($index + 1) * 100 }}">
+                        <div class="card border-0 shadow-sm text-center h-100 py-3 rounded-4 stat-card-hover">
+                            <div class="card-body">
+                                <!-- Ikon -->
+                                <div class="icon-box bg-{{ $stat['color'] }} bg-opacity-10 text-{{ $stat['color'] }} rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 65px; height: 65px; font-size: 28px;">
+                                    <i class="fas {{ $stat['icon'] }}"></i>
+                                </div>
+
+                                <!-- Angka & Label -->
+                                <h3 class="fw-bold mb-1 counter-value" data-target="{{ $stat['value'] }}">{{ $stat['value'] }}</h3>
+                                <p class="text-muted small mb-0 fw-semibold text-uppercase" style="letter-spacing: 0.5px; font-size: 0.75rem;">
+                                    {{ $stat['label'] }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-0 bg-light">
     <div class="container">
         <!-- Tabs for Dosen and Tendik -->
-        <ul class="nav nav-pills nav-justified mb-5 shadow-sm rounded-4 bg-white p-2" id="staffTab" role="tablist" data-aos="fade-up">
+        <ul class="nav nav-pills nav-justified mb-2 shadow-sm rounded-4 bg-white p-2" id="staffTab" role="tablist" data-aos="fade-up">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active rounded-4 fw-bold py-3" id="dosen-tab" data-bs-toggle="pill" data-bs-target="#dosen" type="button" role="tab" aria-controls="dosen" aria-selected="true">
                     <i class="fas fa-chalkboard-teacher me-2"></i> {{ __('Dosen / Pengajar') }}
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link rounded-4 fw-bold py-3" id="tendik-tab" data-bs-toggle="pill" data-bs-target="#tendik" type="button" role="tab" aria-controls="tendik" aria-selected="false">
+                <button class="nav-link rounded-4 fw-bold py-1" id="tendik-tab" data-bs-toggle="pill" data-bs-target="#tendik" type="button" role="tab" aria-controls="tendik" aria-selected="false">
                     <i class="fas fa-user-cog me-2"></i> {{ __('Tenaga Kependidikan') }}
                 </button>
             </li>
         </ul>
 
         <div class="tab-content" id="staffTabContent">
-
             <!-- Dosen Tab -->
             <div class="tab-pane fade show active" id="dosen" role="tabpanel" aria-labelledby="dosen-tab">
                 {{--Filter Bar--}}
-                <div class="filter-card shadow-sm mb-5 p-4 rounded-4 bg-white border border-ligh">
+                <div class="filter-card shadow-sm mb-1 p-1 rounded-4 bg-white border border-ligh">
                     <form action="{{ route('lecturers.index') }}" method="GET" class="row g-3 justify-content-end">
                         <div class="row g-3 justify-content-end align-items-end mb-3">
                             <!-- Input Pencarian -->
@@ -256,5 +303,45 @@
     .nav-pills .nav-link {
         color: var(--bs-secondary);
     }
+
+
+         /* Efek melayang (hover) pada card statistik */
+     .stat-card-hover {
+         transition: transform 0.3s ease, box-shadow 0.3s ease;
+     }
+    .stat-card-hover:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    /* Opsional: memastikan letter-spacing rapi */
+    .letter-spacing-1 {
+        letter-spacing: 1px;
+    }
 </style>
+@endpush
+
+@push('scripts')
+<script>
+    // Counter Animation for Infographics
+    const counters = document.querySelectorAll('.counter-value');
+    const speed = 200;
+
+    const runCounter = () => {
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const inc = target / speed;
+
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + inc);
+                    setTimeout(updateCount, 1);
+                } else {
+                    counter.innerText = target.toLocaleString();
+                }
+            };
+            updateCount();
+        });
+    };
+</script>
 @endpush
