@@ -8,15 +8,29 @@ use Illuminate\Http\Request;
 
 class LecturerController extends Controller
 {
+    protected $lecturer = 'dosen';
+    protected $tendik = 'tendik';
+
     public function index(Request $request)
     {
-        $query = Lecturer::active()
-            ->when($request->type, fn($q) => $q->where('type', $request->type))
-            ->when($request->search, fn($q) => $q->where('name', 'like', "%{$request->search}%"))
-            ->orderBy('order');
 
-        $dosen = Lecturer::active()->dosen()->orderBy('order')->get();
-        $tendik = Lecturer::active()->where('type', 'tendik')->orderBy('order')->get();
+        $dosenQuery = Lecturer::active()->where('type', 'dosen');
+        if($request->filled('q')) {
+            $search = $request->q;
+            $dosenQuery->where(function($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('nip', 'like', "%{$search}%")
+                    ->orWhere('position', 'like', "%{$search}%");
+            });
+        } else {
+            $query = Lecturer::active()
+                ->where('type', $this->lecturer)
+                ->orderBy('order')->paginate(15);
+        }
+
+        $dosen = $dosenQuery->orderBy('order')->paginate(15);
+        $dosen->appends($request->all());
+        $tendik = Lecturer::active()->where('type', 'tendik')->orderBy('order')->paginate(15);
 
         return view('frontend.lecturers.index', compact('dosen', 'tendik'));
     }

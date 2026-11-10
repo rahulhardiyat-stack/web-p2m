@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 
 class LecturersExport implements FromCollection, WithHeadings, WithTitle, WithMapping
 {
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         return Lecturer::orderBy('order')->orderBy('name')->get();
     }

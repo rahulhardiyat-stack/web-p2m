@@ -40,7 +40,7 @@
                         <div class="card-body p-4 text-center">
                             <h5 class="fw-bold mb-1">{{ $lecturer->name }}</h5>
                             <p class="text-primary mb-3">{{ $lecturer->position ?? __('Dosen') }}</p>
-                            
+
                             <div class="d-flex justify-content-center gap-2 mb-4">
                                 @if($lecturer->email)
                                 <a href="mailto:{{ $lecturer->email }}" class="btn btn-primary btn-sm rounded-circle shadow-sm" title="Email"><i class="fas fa-envelope m-1"></i></a>
@@ -79,7 +79,7 @@
                             <p class="text-secondary small">{{ $lecturer->expertise ?: '-' }}</p>
                         </div>
                         <div class="col-md-6">
-                            <h6 class="fw-bold text-dark"><i class="fas fa-university text-primary me-2"></i>{{ __('Jabatan Fungsional') }}</h6>
+                            <h6 class="fw-bold text-dark"><i class="fas fa-university text-primary me-2"></i>{{ __('Jabatan') }}</h6>
                             <p class="text-secondary small">{{ $lecturer->functional_position ?: '-' }}</p>
                         </div>
                         <div class="col-12">
@@ -112,7 +112,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="text-center mt-5">
                     <a href="{{ route('lecturers.index') }}" class="btn btn-outline-primary rounded-pill px-5">
                         <i class="fas fa-arrow-left me-2"></i> {{ __('Kembali ke Daftar Dosen') }}
