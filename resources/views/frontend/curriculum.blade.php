@@ -263,7 +263,7 @@
                             <form action="{{ route('lecturers.index') }}" method="GET" class="row g-3 align-items-end">
                                 <!-- Input Pencarian -->
                                 <div class="col-12 col-md-6 col-lg-5">
-                                    <label for="lecturer-search" class="form-label small fw-bold text-muted text-uppercase letter-spacing-1">Cari Dosen</label>
+                                    <label for="lecturer-search" class="form-label small fw-bold text-muted text-uppercase letter-spacing-1">Cari Nama MataKuliah</label>
                                     <div class="input-group shadow-sm">
                                     <span class="input-group-text bg-white border-end-0">
                                         <i class="fas fa-search text-success"></i>
@@ -274,7 +274,7 @@
 
                                 <!-- Select Homebase -->
                                 <div class="col-12 col-md-6 col-lg-4">
-                                    <label for="lecturer-homebase" class="form-label small fw-bold text-muted text-uppercase letter-spacing-1">Homebase</label>
+                                    <label for="lecturer-homebase" class="form-label small fw-bold text-muted text-uppercase letter-spacing-1">Prodi</label>
                                     <select id="lecturer-homebase" name="p" class="form-select shadow-sm select-year">
                                         <option value="">--Prodi--</option>
                                         <option value="Dosen-PAI" @selected(request('p') === 'Dosen-PAI')>Pendidikan Agama Islam</option>
@@ -309,7 +309,7 @@
                                  </div>--}}
                                 @if(request('q') || request('p'))
                                     <div class="col-12 mt-2">
-                                        <a href="{{ route('lecturers.index') }}" class="text-danger small fw-bold text-decoration-none">
+                                        <a href="{{ route('curriculum') }}" class="text-danger small fw-bold text-decoration-none">
                                             <i class="fas fa-times-circle me-1"></i> Reset Filter
                                         </a>
                                     </div>
