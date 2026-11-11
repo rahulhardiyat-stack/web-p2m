@@ -46,11 +46,11 @@
                     // Contoh array data, nantinya ini bisa dipassing dari Controller, misal: $statistikDosen
                     $statistikDosen = [
                         ['label' => 'Total Dosen', 'value' => 107, 'icon' => 'fa-users', 'color' => 'primary'],
-                        ['label' => 'Asisten Ahli', 'value' => 0, 'icon' => 'fa-user-graduate', 'color' => 'warning'],
-                        ['label' => 'Lektor', 'value' => 0, 'icon' => 'fa-user-tie', 'color' => 'info'],
-                        ['label' => 'Lektor Kepala', 'value' => 0, 'icon' => 'fa-chalkboard-teacher', 'color' => 'success'],
-                        ['label' => 'Magister (S2)', 'value' => 0, 'icon' => 'fa-book-reader', 'color' => 'secondary'],
-                        ['label' => 'Doktor (S3)', 'value' => 0, 'icon' => 'fa-award', 'color' => 'danger'],
+                        ['label' => 'Asisten Ahli', 'value' => 37, 'icon' => 'fa-user-graduate', 'color' => 'warning'],
+                        ['label' => 'Lektor', 'value' => 55, 'icon' => 'fa-user-tie', 'color' => 'info'],
+                        ['label' => 'Lektor Kepala', 'value' => 14, 'icon' => 'fa-chalkboard-teacher', 'color' => 'success'],
+                        ['label' => 'Guru Besar', 'value' => 1, 'icon' => 'fa-book-reader', 'color' => 'secondary'],
+                        ['label' => 'Tendik', 'value' => 65, 'icon' => 'fa-user-tie', 'color' => 'danger'],
                     ];
                 @endphp
 
