@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 
 class CurriculumTemplateExport implements FromCollection, WithHeadings, WithTitle
 {
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         return new Collection([
             [

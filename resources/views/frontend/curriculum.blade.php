@@ -203,8 +203,6 @@
 </style>
 @endpush--}}
 
-
-
 @section('content')
     <div class="lecturers-page">
 
@@ -302,11 +300,6 @@
                                     </button>
                                 </div>
 
-                                {{-- <div class="col-md-4 d-grid">
-                                     <button type="submit" class="btn btn-success btn-sm rounded-pill py-1 shadow-sm">
-                                         <i class="fas fa-filter me-2 text-white"></i> Filter
-                                     </button>
-                                 </div>--}}
                                 @if(request('q') || request('p'))
                                     <div class="col-12 mt-2">
                                         <a href="{{ route('curriculum') }}" class="text-danger small fw-bold text-decoration-none">
@@ -322,7 +315,6 @@
                                 <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}"
                                      id="semester-{{ $semester }}"
                                      role="tabpanel">
-
                                     <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
                                         <div class="table-responsive">
                                             <table class="table table-hover align-middle mb-0">

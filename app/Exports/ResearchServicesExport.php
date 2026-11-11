@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 
 class ResearchServicesExport implements FromCollection, WithHeadings, WithTitle, WithMapping
 {
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         return ResearchService::orderBy('order')->orderBy('year', 'desc')->get();
     }
