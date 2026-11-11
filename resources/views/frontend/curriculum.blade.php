@@ -233,6 +233,7 @@
             </div>
         </section>
 
+        {{--Tab Curriculum--}}
         <section class="pt-0 pb-5 bg-light">
             <div class="container">
                 <!-- Tabs for Dosen and Tendik -->
@@ -248,7 +249,7 @@
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link rounded-4 fw-bold py-3" id="tendik-tab" data-bs-toggle="pill" data-bs-target="#tendik" type="button" role="tab" aria-controls="tendik" aria-selected="false">
+                        <button class="nav-link rounded-4 fw-bold py-3" id="tendik-tab" data-bs-toggle="pill" data-bs-target="#pengembangan-kur" type="button" role="tab" aria-controls="tendik" aria-selected="false">
                             <i class="fas fa-user-cog me-2"></i> {{ __('kegiatan pengembangan kurikulum') }}
                         </button>
                     </li>
@@ -315,111 +316,88 @@
                                 @endif
                             </form>
                         </div>
-
                         {{--data dosen--}}
-                        <div class="table-responsive lecturers-table-wrapper shadow-sm rounded-4 border-0">
-                            <table class="table table-hover align-middle mb-0 custom-datatable lecturers-table">
-                                <thead class="bg-success bg-gradient text-white">
-                                <tr>
-                                    <th class="px-4 py-4 text-center">No</th>
-                                    <th class="px-4 py-4" style="width: 35%;">Nama Dosen</th>
-                                    <th class="py-4">Jabatan</th>
-                                    <th class="py-4 text-center">Homebase</th>
-                                    <th class="px-4 py-4 text-end">Aksi</th>
-                                </tr>
-                                </thead>
-                                <tbody class="bg-white">
-                                @forelse($curriculums as $item)
-                                    <tr>
-                                        <td class="px-4 py-3 text-center lecturer-number">
-                                            <span>{{ $dosen->firstItem() + $loop->index }}</span>
-                                        </td>
-                                        <td class="px-4 py-3 lecturer-identity">
-                                            <div class="d-flex align-items-center">
-                                                <img src="{{ $item->photo_url }}" class="lecturer-avatar" alt="{{ $item->name }}" loading="lazy">
-                                                <div class="text-dark fw-bold" style="font-size: 0.95rem; line-height: 1.4;">
-                                                    {{ $item->name }}
-                                                    <div style="color: gray; font-size: 0.75rem; font-weight: normal;">
-                                                        {{ $item->nip }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="py-3 lecturer-detail" data-label="Jabatan">
-                                            <span class="text-secondary small d-block"><i class="fas fa-user-circle me-2 opacity-50"></i>{{ $item->academic_title ?? 'Tutor/Dosen' }}</span>
-                                        </td>
-                                        <td class="py-3 text-center lecturer-detail" data-label="Homebase">
-                            <span class="badge bg-soft-success px-3 py-2 rounded-pill text-success fw-bold" style="font-size: 0.8rem;">
-                                {{ $item->position ?? '-' }}
-                            </span>
-                                        </td>
-                                        <td class="px-4 py-3 text-end lecturer-action">
-                                            <a href="{{ route('lecturers.show', $item->id) }}" class="btn btn-outline-primary btn-sm w-100 rounded-pill">{{ __('Lihat Profil') }}</a>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="text-center py-5">
-                                            <div class="py-4">
-                                                <i class="fas fa-database fa-3x text-muted opacity-20 mb-3"></i>
-                                                <h5 class="text-muted fw-bold">Tidak ada data dosen ditemukan.</h5>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="lecturers-pagination mt-4 d-flex justify-content-center">
-                            {{--{{ $curriculums->links() }}--}}
-                        </div>
+                        <div class="tab-content" id="curriculumTabsContent">
+                            @foreach($curriculums as $semester => $items)
+                                <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}"
+                                     id="semester-{{ $semester }}"
+                                     role="tabpanel">
 
+                                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover align-middle mb-0">
+                                                <thead class="bg-primary text-white">
+                                                <tr>
+                                                    <th class="ps-4 py-4" style="width: 100px;">Kode</th>
+                                                    <th class="py-4">Mata Kuliah</th>
+                                                    <th class="py-4 text-center" style="width: 80px;">SKS</th>
+                                                    <th class="py-4">Tipe</th>
+                                                    <th class="py-4">Konsentrasi</th>
+                                                    <th class="pe-4 py-4 text-center" style="width: 150px;">RPS / Silabus</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($items as $course)
+                                                    <tr>
+                                                        <td class="ps-4 py-3 fw-bold text-primary">{{ $course->code }}</td>
+                                                        <td class="py-3">
+                                                            <div class="fw-bold text-dark">{{ $course->name }}</div>
+                                                            @if($course->description)
+                                                                <small class="text-muted d-block mt-1">{{ Str::limit($course->description, 100) }}</small>
+                                                            @endif
+                                                        </td>
+                                                        <td class="py-3 text-center fw-bold">{{ $course->credits }}</td>
+                                                        <td class="py-3 text-capitalize">
+                                                        <span class="badge {{ $course->type == 'wajib' ? 'bg-info' : 'bg-secondary' }} rounded-pill px-3 py-2">
+                                                            {{ $course->type }}
+                                                        </span>
+                                                        </td>
+                                                        <td class="py-3">
+                                                            {{ $course->concentration ?: '-' }}
+                                                        </td>
+                                                        <td class="pe-4 py-3 text-center">
+                                                            @if($course->rps_file)
+                                                                <a href="{{ asset('storage/' . $course->rps_file) }}" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                                                                    <i class="fas fa-download me-1"></i> PDF
+                                                                </a>
+                                                            @else
+                                                                <span class="text-muted small italic">N/A</span>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                                <tfoot class="bg-light">
+                                                <tr>
+                                                    <td colspan="2" class="ps-4 py-3 fw-bold text-dark">Total SKS Semester {{ $semester }}</td>
+                                                    <td class="py-3 text-center fw-bold text-primary" style="font-size: 1.1rem;">
+                                                        {{ $items->sum('credits') }}
+                                                    </td>
+                                                    <td colspan="3"></td>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
-
-                    {{--old_dosen tab--}}
-                    {{-- <div class="tab-pane fade show active" id="dosen" role="tabpanel" aria-labelledby="dosen-tab">
-                         <div class="row g-4">
-                             @forelse($dosen as $item)
-                             <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="{{ $loop->iteration * 50 }}">
-                                 <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden transition-hover">
-                                     <div class="position-relative">
-                                         <img src="{{ $item->photo_url }}" class="card-img-top" alt="{{ $item->name }}" style="height: 300px; object-fit: cover;">
-                                         <div class="position-absolute bottom-0 start-0 w-100 p-3 bg-gradient-dark text-white">
-                                             <h6 class="fw-bold mb-0">{{ $item->name }}</h6>
-                                             <small class="opacity-75">{{ $item->academic_title }}</small>
-                                         </div>
-                                     </div>
-                                     <div class="card-body p-3">
-                                         <p class="text-primary small fw-bold mb-2"><i class="fas fa-briefcase me-1"></i> {{ $item->position ?? __('Dosen') }}</p>
-                                         <div class="text-secondary small mb-3">
-                                             <i class="fas fa-microscope me-1"></i> {{ \Illuminate\Support\Str::limit($item->expertise, 50) }}
-                                         </div>
-                                         <a href="{{ route('lecturers.show', $item->id) }}" class="btn btn-outline-primary btn-sm w-100 rounded-pill">{{ __('Lihat Profil') }}</a>
-                                     </div>
-                                 </div>
-                             </div>
-                             @empty
-                             <div class="col-12 text-center py-5">
-                                 <p class="text-muted">{{ __('Data dosen belum tersedia.') }}</p>
-                             </div>
-                             @endforelse
-                         </div>
-                     </div>--}}
 
                     <!-- Tendik Tab -->
                     <div class="tab-pane fade" id="tendik" role="tabpanel" aria-labelledby="tendik-tab">
                         <div class="row g-4">
-                            @forelse($curriculums as $item)
+                            <p>Data Kuliah Tamu Kosong</p>
+                            {{--@forelse($curriculums as $cur => $item)
                                 <div class="col-md-6 col-lg-3">
                                     <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden transition-hover">
                                         <div class="position-relative">
-                                            <img src="{{ $item->photo_url }}" class="card-img-top" alt="{{ $item->name }}" style="height: 300px; object-fit: cover;">
                                             <div class="position-absolute bottom-0 start-0 w-100 p-3 bg-gradient-dark text-white">
                                                 <h6 class="fw-bold mb-0">{{ $item->name }}</h6>
                                             </div>
                                         </div>
                                         <div class="card-body p-3 text-center">
-                                            <p class="text-primary small fw-bold mb-0">{{ $item->position ?? __('Staf') }}</p>
+                                            <p class="text-primary small fw-bold mb-0">{{ __('Staf') }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -427,7 +405,30 @@
                                 <div class="col-12 text-center py-5">
                                     <p class="text-muted">{{ __('Data tenaga kependidikan belum tersedia.') }}</p>
                                 </div>
-                            @endforelse
+                            @endforelse--}}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pengembangan-kur" role="tabpanel" aria-labelledby="tendik-tab">
+                        <div class="row g-4">
+                            <p>Data Kegiatan Kosong</p>
+                            {{--@forelse($curriculums as $cur => $item)
+                                <div class="col-md-6 col-lg-3">
+                                    <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden transition-hover">
+                                        <div class="position-relative">
+                                            <div class="position-absolute bottom-0 start-0 w-100 p-3 bg-gradient-dark text-white">
+                                                <h6 class="fw-bold mb-0">{{ $item->name }}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="card-body p-3 text-center">
+                                            <p class="text-primary small fw-bold mb-0">{{ __('Staf') }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="col-12 text-center py-5">
+                                    <p class="text-muted">{{ __('Data tenaga kependidikan belum tersedia.') }}</p>
+                                </div>
+                            @endforelse--}}
                         </div>
                     </div>
                 </div>
@@ -438,6 +439,13 @@
 
 @push('styles')
     <style>
+
+        /* Mengubah warna background tab yang aktif */
+        .nav-pills .nav-link.active,
+        .nav-pills .show > .nav-link {
+            background-color: #117b4b !important; /* Ganti dengan kode warna yang diinginkan */
+            color: #ffffff !important; /* Warna teks */
+        }
         .rotate-n-15 { transform: rotate(-15deg); }
         .transition-hover { transition: all 0.3s ease; }
         .transition-hover:hover { transform: translateY(-5px); box-shadow: 0 1rem 2rem rgba(0,0,0,0.1) !important; }
@@ -450,20 +458,6 @@
         }
         .lecturers-page .nav-pills .nav-link {
             color: var(--bs-secondary);
-        }
-
-
-        /* Efek melayang (hover) pada card statistik */
-        .stat-card-hover {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .stat-card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
-        }
-        /* Opsional: memastikan letter-spacing rapi */
-        .letter-spacing-1 {
-            letter-spacing: 1px;
         }
 
         .lecturers-page .lecturers-header { padding-bottom: 4rem !important; }
