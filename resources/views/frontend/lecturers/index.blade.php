@@ -32,7 +32,7 @@
 
 {{--infografis data dosen--}}
 <section class="lecturers-statistics py-4 py-lg-5 bg-light">
-        <div class="container">
+    <div class="container">
             <div class="statistics-panel shadow-sm rounded-4 bg-white p-3 p-md-4">
             <!-- Section Header -->
             <div class="text-center mb-4">
