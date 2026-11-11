@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 
 class LecturersImport implements ToModel, WithHeadingRow, WithValidation, SkipsEmptyRows
 {
-    public function model(array $row)
+    public function model(array $row): \Illuminate\Database\Eloquent\Model|array|null
     {
         // Sanitize URLs
         $urlFields = [

@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 
 class ResearchServicesImport implements ToModel, WithHeadingRow, WithValidation, SkipsEmptyRows
 {
-    public function model(array $row)
+    public function model(array $row): \Illuminate\Database\Eloquent\Model|array|null
     {
         // Sanitize External Link
         if (!empty($row['link_eksternal'])) {

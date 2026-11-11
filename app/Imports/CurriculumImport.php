@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 
 class CurriculumImport implements ToModel, WithHeadingRow, WithValidation, SkipsEmptyRows
 {
-    public function model(array $row)
+    public function model(array $row): \Illuminate\Database\Eloquent\Model|array|null
     {
         return new Curriculum([
             'code' => $row['kode'] ?? null,
